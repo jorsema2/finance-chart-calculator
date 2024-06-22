@@ -5,43 +5,48 @@ let investmentChart = null;
 function initializeChart() {
     const initialInvestment = 10000; // Example initial investment
     const yearlyContribution = 5000; // Example yearly contribution
-    const growthRate = 8; // Example growth rate (%)
+    const growthRate1 = 8; // Example growth rate for scenario 1 (%)
+    const growthRate2 = 6; // Example growth rate for scenario 2 (%)
 
-    renderChart(initialInvestment, yearlyContribution, growthRate);
+    renderChart(initialInvestment, yearlyContribution, growthRate1, growthRate2);
 }
 
 // Function to calculate investment growth and render chart
-function renderChart(initialInvestment, yearlyContribution, growthRate) {
-    // Prepare data for Chart.js
+function renderChart(initialInvestment, yearlyContribution, growthRate1, growthRate2) {
     const years = [];
-    const values = [];
+    const values1 = [];
+    const values2 = [];
 
-    let currentValue = initialInvestment;
+    let currentValue1 = initialInvestment;
+    let currentValue2 = initialInvestment;
 
-    // Calculate investment growth for 30 years (adjust as needed)
     for (let year = 0; year <= 30; year++) {
         years.push(year);
-        values.push(currentValue);
+        values1.push(currentValue1);
+        values2.push(currentValue2);
 
-        // Calculate investment growth for the current year
-        currentValue = currentValue * (1 + growthRate / 100) + yearlyContribution;
+        currentValue1 = currentValue1 * (1 + growthRate1 / 100) + yearlyContribution;
+        currentValue2 = currentValue2 * (1 + growthRate2 / 100) + yearlyContribution;
     }
 
-    // Check if chart instance already exists, destroy it before creating new one
     if (investmentChart) {
         investmentChart.destroy();
     }
 
-    // Chart.js setup
     const ctx = document.getElementById('investmentChart').getContext('2d');
     investmentChart = new Chart(ctx, {
         type: 'line',
         data: {
             labels: years,
             datasets: [{
-                label: 'Investment Growth',
-                data: values,
+                label: 'Scenario 1',
+                data: values1,
                 borderColor: 'rgb(75, 192, 192)',
+                tension: 0.1
+            }, {
+                label: 'Scenario 2',
+                data: values2,
+                borderColor: 'rgb(255, 99, 132)',
                 tension: 0.1
             }]
         },
@@ -57,19 +62,17 @@ function renderChart(initialInvestment, yearlyContribution, growthRate) {
 
 // Function to handle button click event
 function calculateAndDisplay() {
-    // Get user inputs
     const initialInvestment = parseFloat(document.getElementById('initialInvestment').value);
     const yearlyContribution = parseFloat(document.getElementById('yearlyContribution').value);
-    const growthRate = parseFloat(document.getElementById('growthRate').value);
+    const growthRate1 = parseFloat(document.getElementById('growthRate1').value);
+    const growthRate2 = parseFloat(document.getElementById('growthRate2').value);
 
-    // Validate inputs (optional)
-    if (isNaN(initialInvestment) || isNaN(yearlyContribution) || isNaN(growthRate)) {
+    if (isNaN(initialInvestment) || isNaN(yearlyContribution) || isNaN(growthRate1) || isNaN(growthRate2)) {
         alert('Please enter valid numbers for all fields.');
         return;
     }
 
-    // Render chart with user inputs
-    renderChart(initialInvestment, yearlyContribution, growthRate);
+    renderChart(initialInvestment, yearlyContribution, growthRate1, growthRate2);
 }
 
 // Initialize the chart with default values
