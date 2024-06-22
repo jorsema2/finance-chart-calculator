@@ -55,7 +55,11 @@ function renderChart(initialInvestment, yearlyContribution, growthRate1, growthR
                 y: {
                     beginAtZero: false
                 }
-            }
+            },
+            interaction: {
+                intersect: false,
+                mode: 'index',
+            },
         }
     });
 }
