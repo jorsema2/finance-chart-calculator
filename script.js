@@ -39,12 +39,12 @@ function renderChart(initialInvestment, yearlyContribution, growthRate1, growthR
         data: {
             labels: years,
             datasets: [{
-                label: 'Scenario 1',
+                label: 'First Scenario',
                 data: values1,
                 borderColor: 'rgb(75, 192, 192)',
                 tension: 0.1
             }, {
-                label: 'Scenario 2',
+                label: 'Second Scenario',
                 data: values2,
                 borderColor: 'rgb(255, 99, 132)',
                 tension: 0.1
